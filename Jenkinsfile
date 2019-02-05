@@ -9,7 +9,8 @@ pipeline {
         stage('Run Static Code Analysis') {
             steps {
                 echo 'I made a code change'
-                sh 'bundle install'
+                sh 'gem install bundle'
+                sh 'bin/setup'
                 sh 'rake rubocop'
             }
         }
