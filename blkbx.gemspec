@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.email         = ['robert.maccracken@gmail.com']
   spec.license       = 'Nonstandard'
   spec.summary       = 'Ruby-Watir-BlackBox'
-  spec.description   = 'TODO: Discription Here'
-  spec.homepage      = 'TODO: URL'
+  spec.description   = 'Description Here'
+  spec.homepage      = 'https://valencemedia.com'
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     tests = %r{^(test|spec|features)/}
@@ -21,6 +21,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'bundler', '~> 2.0'
-  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rake', '~> 12.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
 end
