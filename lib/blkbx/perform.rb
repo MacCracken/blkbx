@@ -38,7 +38,7 @@ module Blkbx
         perf_summary_mutli_keys(keys)
       else
         perf_summary_str(keys.to_s.tr('_', ' ').upcase,
-                        browser.performance.summary[keys])
+                         browser.performance.summary[keys])
       end
     end
 
