@@ -3,4 +3,7 @@ set -euo pipefail
 IFS=$'\n\t'
 set -vx
 
+gem update --system --silent
+gem install bundle --silent
 bundle install
+gem cleanup -q --silent
