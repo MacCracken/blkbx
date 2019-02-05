@@ -8,6 +8,7 @@ pipeline {
   stages {
     stage('Setup') {
       steps {
+        sh 'gem update --system'
         sh 'gem install bundle'
         sh 'bin/setup'
       }
