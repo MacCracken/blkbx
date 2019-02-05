@@ -15,6 +15,7 @@ pipeline {
     }
     stage('Run Spec Tests') {
         steps {
+          sh 'bundle install'
           sh 'bin/setup'
           sh 'rake spec'
         }
