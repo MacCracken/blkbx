@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
-#set -euo pipefail
-#IFS=$'\n\t'
-#set -vx
+set -euo pipefail
+IFS=$'\n\t'
+set -vx
 
+# Gem Update System
 gem update --system
 
-gem install bundle
+# Install Bundle 
+gem install bundle --silent
 
+# Bundle Installs Required Gems
 bundle install
 
-gem cleanup
+# Cleaning up Gem Updates
+gem cleanup --silent
