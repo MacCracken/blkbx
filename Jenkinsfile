@@ -6,19 +6,26 @@ pipeline {
   }
 
   stages {
+    stage('Install Requirements') {
+      steps {
+        sh 'gem install bundle'
+        sh 'bundle install'
+      }
+    }
     stage('Run Static Code Analysis') {
-        steps {
-          sh 'gem install bundle'
-          sh 'bundle install'
-          sh 'rake rubocop'
-        }
+      steps {
+        sh 'rake rubocop'
+      }
+    }
+    stage('Setup') {
+      steps {
+        sh 'bin/setup'
+      }
     }
     stage('Run Spec Tests') {
-        steps {
-          sh 'bundle install'
-          sh 'bin/setup'
-          sh 'rake spec'
-        }
+      steps {
+        sh 'rake spec'
+      }
     }
   }
 }
