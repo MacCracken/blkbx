@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.license       = 'Nonstandard'
   spec.summary       = 'Ruby-Watir-BlackBox'
   spec.description   = 'Description Here'
-  spec.homepage      = 'https://valencemedia.com'
+  spec.homepage      = 'https://robertmaccracken.com'
   spec.require_paths = ['lib']
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
