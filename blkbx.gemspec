@@ -11,14 +11,12 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Ruby-Watir-BlackBox'
   spec.description   = 'Description Here'
   spec.homepage      = 'https://valencemedia.com'
+  spec.require_paths = ['lib']
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     tests = %r{^(test|spec|features)/}
     `git ls-files -z`.split("\x0").reject { |f| f.match(tests) }
   end
-  spec.bindir        = 'exe'
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = ['lib']
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'rake', '~> 12.0'
