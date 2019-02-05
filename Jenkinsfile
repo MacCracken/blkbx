@@ -11,12 +11,12 @@ pipeline {
         sh 'bin/setup'
       }
     }
-    stage('Run Static Code Analysis') {
+    stage('Static Code Analysis') {
       steps {
         sh 'rake rubocop'
       }
     }
-    stage('Run Spec Tests') {
+    stage('Spec Tests') {
       steps {
         sh 'rake spec'
       }
