@@ -1,11 +1,15 @@
 pipeline {
-    agent any
+    agent {
+      docker {
+        image 'ruby:latest'
+      }
+    }
 
     stages {
         stage('Run Static Code Analysis') {
             steps {
                 echo 'I made a code change'
-                rake rubocop
+                sh 'rake rubocop'
             }
         }
         stage('Run Unit Tests') {
