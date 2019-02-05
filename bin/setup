@@ -7,10 +7,10 @@ set -vx
 gem update --system
 
 # Install Bundle 
-gem install bundle --silent
+gem install bundle
 
 # Bundle Installs Required Gems
 bundle install
 
 # Cleaning up Gem Updates
-gem cleanup --silent
+gem cleanup
