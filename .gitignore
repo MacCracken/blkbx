@@ -7,6 +7,7 @@
 /spec/reports/
 /tmp/
 
+blkbx-*.gem
 # rspec failure tracking
 .rspec_status
 rspec_results.html
