@@ -3,12 +3,8 @@ module Blkbx
   # Using Watir-Performance Gem
   # https://rubygems.org/gems/watir-performance
   class Performance
-    # Only send Browser Object Through
-    def self.response_time(browser)
-      no_safari = 'No Safari Performance Support'
-      return no_safari if browser.name == :Safari || browser.name == :safari
-
-      perf_summary(browser, :response_time)
+    def self.type(browser, type, key)
+      browser.performance.send(type.to_s)[key]
     end
 
     # consider consolidation with other functions, if keys empty return
@@ -26,6 +22,17 @@ module Blkbx
 
     def self.timing(browser)
       browser.performance.timing
+    end
+
+    # Response Time as a String
+    def self.response_time(browser)
+      no_safari_suport(browser)
+      perf_summary(browser, :response_time)
+    end
+
+    def self.no_safari_suport(browser)
+      no_safari = 'No Safari Performance Support'
+      return no_safari if browser.name == :safari
     end
 
     # Performance Summary: Keys
@@ -141,7 +148,7 @@ module Blkbx
         perf_timing << perf_time_multi_keys(keys)
       else
         key_time = browser.performance.timing[keys]
-        perf_timing << perf_time_str(key_time)
+        perf_timing << "Time: #{key_time} seconds"
       end
       perf_timing
     end
@@ -154,17 +161,9 @@ module Blkbx
       timing = []
       keys.each do |k|
         key_time = browser.performance.timing[k[:key]]
-        timing << perf_time_str(key_time)
+        timing << "Time: #{key_time} seconds"
       end
       timing
-    end
-
-    # Performance Time: Key String
-    #
-    # Creates Performance String with given
-    # Epoch Time in seconds
-    def self.perf_time_str(key_time)
-      "Time: #{key_time} seconds"
     end
   end
 end

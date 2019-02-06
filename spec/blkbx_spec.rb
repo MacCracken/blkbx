@@ -4,16 +4,31 @@ RSpec.describe 'VERSION' do
   end
 end
 
-RSpec.describe Blkbx::Browser do
+RSpec.describe Blkbx::Browser, Blkbx::Performance do
   url = 'https://www.google.com/'
   %I[firefox chrome safari].each do |example|
     describe "#{example.upcase} LOCAL".upcase do
-      it '#WORKS' do
+      browser = nil
+
+      it '#BROWSER' do
         browser = Blkbx::Browser.new example
         browser.goto url
         expect(browser.url).to eq url
         expect(browser.ready_state).to eq('complete').or eq('interactive')
-        puts Blkbx::Performance.response_time(browser)
+      end
+
+      if example != :safari
+        it '#PERFORMANCE' do
+          dom_release = Blkbx::Performance.response_time(browser)
+          raw = Blkbx::Performance.type(browser, :summary, :response_time)
+          expect(raw.class).to eq(Integer)
+          expect(raw).to be > 0
+          expect(raw / 1000).to be >= 0
+          expect(raw / 1000).to eq(dom_release.to_i)
+        end
+      end
+
+      it '#BROWSER-CLOSE' do
         browser.quit || browser.close
       end
     end
@@ -21,11 +36,11 @@ RSpec.describe Blkbx::Browser do
 end
 
 RSpec.describe Blkbx::Browser, Blkbx::Capabilities do
-  caps = Blkbx::Capabilities.new
+  let(:caps) { Blkbx::Capabilities.new }
   %I[firefox chrome safari].each do |example|
     describe "#{example.upcase} REMOTE" do
-      it '#Set' do
-        # caps[:browser_name] = example
+      it '#SET CAPABILITIES' do
+        caps[:browser_name] = example
         caps[:takes_screenshot] = 'true'                # Allow Screenshots
         caps[:javascript_enabled] = 'true'              # Allow Javascript
         caps[:native_events] = 'true'                   # Allow NativeEvents
@@ -36,7 +51,7 @@ RSpec.describe Blkbx::Browser, Blkbx::Capabilities do
       end
 
       #  Requires Selenium-Server running locally to pass
-      it '#WORKS' do
+      it '#BROWSER' do
         url = 'https://www.google.com/'
         hub = 'http://localhost:4444/wd/hub/'
         browser = Blkbx::Browser.new example,
@@ -44,7 +59,6 @@ RSpec.describe Blkbx::Browser, Blkbx::Capabilities do
                                      opt: caps
         browser.goto url
         expect(browser.url).to eq url
-        puts Blkbx::Performance.response_time(browser)
         browser.quit || browser.close
       end
     end
