@@ -53,7 +53,7 @@ RSpec.describe Blkbx::Browser, Blkbx::Capabilities do
       #  Requires Selenium-Server running locally to pass
       it '#BROWSER' do
         url = 'https://www.google.com/'
-        hub = 'http://localhost:4444/wd/hub/'
+        hub = 'http://127.0.0.1:4444/wd/hub/'
         browser = Blkbx::Browser.new example,
                                      url: hub,
                                      opt: caps
