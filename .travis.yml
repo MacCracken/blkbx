@@ -16,4 +16,4 @@ before_install:
   - gem update --system
   - gem install bundler -v 2.0.1
   - google-chrome-stable --headless &
-  - docker-compose up &
+  - docker-compose up
