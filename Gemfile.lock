@@ -49,7 +49,7 @@ GEM
     watir (6.16.5)
       regexp_parser (~> 1.2)
       selenium-webdriver (~> 3.6)
-    watir-performance (0.7.0)
+    watir-performance (0.8.0)
       watir (~> 6.16)
 
 PLATFORMS
