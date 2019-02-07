@@ -10,7 +10,7 @@ services:
 env:
   - MOZ_HEADLESS=1
 addons:
-  chrome: stable
+  chrome: latest
   firefox: latest
 before_install: 
   - gem update --system
