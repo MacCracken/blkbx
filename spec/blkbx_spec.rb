@@ -7,7 +7,7 @@ end
 url = 'https://www.google.com/'
 test_browsers = %I[firefox chrome]
 test_browsers << :safari if OS.mac? == true
-test_browsers << %i[ie edge] if OS.windows? == true
+test_browsers << %I[ie edge] if OS.windows? == true
 
 RSpec.describe Blkbx::Browser, Blkbx::Performance do
   test_browsers.each do |example|
