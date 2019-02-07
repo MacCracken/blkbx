@@ -4,18 +4,18 @@ RSpec.describe 'VERSION' do
   end
 end
 
+url = 'https://www.google.com/'
 test_browsers = %I[firefox chrome]
 test_browsers << :safari if OS.mac? == true
 test_browsers << %i[ie edge] if OS.windows? == true
 
 RSpec.describe Blkbx::Browser, Blkbx::Performance do
-  url = 'https://www.google.com/'
   test_browsers.each do |example|
     describe "#{example.upcase} LOCAL".upcase do
       browser = nil
 
       it '#BROWSER' do
-        browser = Blkbx::Browser.new example, opts: [headless: true]
+        browser = Blkbx::Browser.new example
         browser.goto url
         expect(browser.url).to eq url
         expect(browser.ready_state).to eq('complete').or eq('interactive')
@@ -55,11 +55,11 @@ RSpec.describe Blkbx::Browser, Blkbx::Capabilities do
 
       #  Requires Selenium-Server running locally to pass
       it '#BROWSER' do
-        url = 'https://www.google.com/'
         hub = 'http://127.0.0.1:4444/wd/hub/'
         browser = Blkbx::Browser.new example, url: hub, opt: caps
         browser.goto url
         expect(browser.url).to eq url
+        expect(browser.ready_state).to eq('complete').or eq('interactive')
         browser.quit || browser.close
       end
     end
