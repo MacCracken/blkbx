@@ -15,7 +15,7 @@ RSpec.describe Blkbx::Browser, Blkbx::Performance do
       browser = nil
 
       it '#BROWSER' do
-        browser = Blkbx::Browser.new example
+        browser = Blkbx::Browser.new example, opts: [headless: true]
         browser.goto url
         expect(browser.url).to eq url
         expect(browser.ready_state).to eq('complete').or eq('interactive')
@@ -48,7 +48,8 @@ RSpec.describe Blkbx::Browser, Blkbx::Capabilities do
         caps[browser_name: example, takes_screenshot: 'true',
              javascript_enabled: 'true', native_events: 'true',
              css_selectors_enabled: 'true', name: 'Watir']
-        caps['browserstack.ie.enablePopups'] = 'true' # IE allows popups; JS
+        # IE allows popups
+        caps['browserstack.ie.enablePopups'] = 'true'
         expect(caps.itself).not_to eq(nil)
       end
 
@@ -56,9 +57,7 @@ RSpec.describe Blkbx::Browser, Blkbx::Capabilities do
       it '#BROWSER' do
         url = 'https://www.google.com/'
         hub = 'http://127.0.0.1:4444/wd/hub/'
-        browser = Blkbx::Browser.new example,
-                                     url: hub,
-                                     opt: caps
+        browser = Blkbx::Browser.new example, url: hub, opt: caps
         browser.goto url
         expect(browser.url).to eq url
         browser.quit || browser.close
