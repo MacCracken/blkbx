@@ -17,4 +17,4 @@ before_install:
   - gem install bundler -v 2.0.1
   - docker-compose up &
   - sleep 120
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - google-chrome-stable --headless --disable-gpu --no-sandbox --disable-dev-shm-usage --remote-debugging-port=9222 http://localhost &
