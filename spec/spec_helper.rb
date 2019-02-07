@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'blkbx'
+require 'os'
 require 'webdrivers'
 
 RSpec.configure do |config|

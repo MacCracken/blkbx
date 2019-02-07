@@ -4,9 +4,13 @@ RSpec.describe 'VERSION' do
   end
 end
 
+test_browsers = %I[firefox chrome]
+test_browsers << :safari if OS.mac? == true
+test_browsers << %i[ie edge] if OS.windows? == true
+
 RSpec.describe Blkbx::Browser, Blkbx::Performance do
   url = 'https://www.google.com/'
-  %I[firefox chrome safari].each do |example|
+  test_browsers.each do |example|
     describe "#{example.upcase} LOCAL".upcase do
       browser = nil
 
@@ -37,16 +41,14 @@ end
 
 RSpec.describe Blkbx::Browser, Blkbx::Capabilities do
   let(:caps) { Blkbx::Capabilities.new }
-  %I[firefox chrome safari].each do |example|
+  test_browsers.each do |example|
     describe "#{example.upcase} REMOTE" do
       it '#SET CAPABILITIES' do
-        caps[:browser_name] = example
-        caps[:takes_screenshot] = 'true'                # Allow Screenshots
-        caps[:javascript_enabled] = 'true'              # Allow Javascript
-        caps[:native_events] = 'true'                   # Allow NativeEvents
-        caps[:css_selectors_enabled] = 'true'           # Allow CSS Selector
-        caps[:name] = 'Watir'                           # Naming Driver
-        caps['browserstack.ie.enablePopups'] = 'true'   # IE allows popups; JS
+        # Allow Screenshots, Javascript, NativeEvents, CSS Selector
+        caps[browser_name: example, takes_screenshot: 'true',
+             javascript_enabled: 'true', native_events: 'true',
+             css_selectors_enabled: 'true', name: 'Watir']
+        caps['browserstack.ie.enablePopups'] = 'true' # IE allows popups; JS
         expect(caps.itself).not_to eq(nil)
       end
 
