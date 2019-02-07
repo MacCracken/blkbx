@@ -18,6 +18,8 @@ pipeline {
     }
     stage('Spec Tests') {
       steps {
+        sh 'docker-compose up & >/dev/null'
+        sh 'sleep 60'
         sh 'rake spec'
       }
     }
