@@ -5,18 +5,19 @@ RSpec.describe 'VERSION' do
 end
 
 url  = 'https://www.google.com/'
-opts = %w[no-sandbox headless disable-gpu]
+args = %w[no-sandbox headless disable-gpu]
 test_browsers = %I[firefox chrome]
 test_browsers << :safari if OS.mac? == true
 test_browsers << %I[ie edge] if OS.windows? == true
+opts = Selenium::WebDriver::Chrome::Options.new(args: args)
+browser = nil
 
 RSpec.describe Blkbx::Browser, Blkbx::Performance do
   test_browsers.each do |example|
     describe "#{example.upcase} LOCAL".upcase do
-      browser = nil
-
       it '#BROWSER' do
-        browser = Blkbx::Browser.new example, opt: opts
+        browser = Blkbx::Browser.new example, opt: opts if example == :chrome
+        browser = Blkbx::Browser.new example if example != :chrome
         browser.goto url
         expect(browser.url).to eq url
         expect(browser.ready_state).to eq('complete').or eq('interactive')
@@ -29,7 +30,7 @@ RSpec.describe Blkbx::Browser, Blkbx::Performance do
           expect(raw.class).to eq(Integer)
           expect(raw).to be > 0
           expect(raw / 1000).to be >= 0
-          expect(raw / 1000).to eq(dom_release.delete(/a-zA-Z /).to_i)
+          expect(raw / 1000).to eq(dom_release.to_i)
         end
       end
 
