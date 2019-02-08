@@ -16,7 +16,7 @@ RSpec.describe Blkbx::Browser, Blkbx::Performance do
       browser = nil
 
       it '#BROWSER' do
-        browser = Blkbx::Browser.new example, opts: opts
+        browser = Blkbx::Browser.new example, opt: opts
         browser.goto url
         expect(browser.url).to eq url
         expect(browser.ready_state).to eq('complete').or eq('interactive')
