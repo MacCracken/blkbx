@@ -13,8 +13,9 @@ addons:
   chrome: stable
   firefox: latest
 before_install: 
+  - bash ./bin/install-chromedriver.sh
   - gem update --system
   - gem install bundler -v 2.0.1
-  - docker-compose up &
-  - sleep 120
-  - google-chrome-stable --headless --disable-gpu --no-sandbox --disable-dev-shm-usage --remote-debugging-port=9222 http://localhost &
+  #- docker-compose up &
+  #- sleep 120
+  #- google-chrome-stable --headless --disable-gpu --no-sandbox --disable-dev-shm-usage --remote-debugging-port=9222 http://localhost &
