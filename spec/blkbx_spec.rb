@@ -15,7 +15,8 @@ RSpec.describe Blkbx::Browser, Blkbx::Performance do
       browser = nil
 
       it '#BROWSER' do
-        browser = Blkbx::Browser.new example
+        browser = Blkbx::Browser.new example, opts: %w[no-sandbox headless
+                                                       disable-gpu]
         browser.goto url
         expect(browser.url).to eq url
         expect(browser.ready_state).to eq('complete').or eq('interactive')
