@@ -5,7 +5,7 @@ RSpec.describe 'VERSION' do
 end
 
 url  = 'https://www.google.com/'
-args = %w[headless no-sandbox disable-gpu disable-dev-shm-usage]
+args = %w[headless disable-gpu no-sandbox disable-extensions disable-dev-shm-usage]
 test_browsers = %I[firefox chrome]
 test_browsers << :safari if OS.mac? == true
 test_browsers << %I[ie edge] if OS.windows? == true
