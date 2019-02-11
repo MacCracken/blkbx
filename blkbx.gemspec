@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_development_dependency 'bundler', '~> 2.0'
+  spec.add_development_dependency 'httpclient', '~> 2.8'
   spec.add_development_dependency 'os', '~> 1.0'
   spec.add_development_dependency 'rake', '~> 12.0'
   spec.add_development_dependency 'rspec', '~> 3.0'

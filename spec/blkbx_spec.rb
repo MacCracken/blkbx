@@ -5,6 +5,13 @@ RSpec.describe 'VERSION' do
 end
 
 url = 'https://www.google.com/'
+
+RSpec.describe Blkbx::HTTP do
+  it 'url status equal to 200' do
+    expect(Blkbx::HTTP.get(url).status).to eq(200)
+  end
+end
+
 hub = 'http://127.0.0.1:4444/wd/hub/'
 browser = nil
 test_browsers = %I[chrome firefox]

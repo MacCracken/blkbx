@@ -1,7 +1,8 @@
-['watir', 'watir-performance'].map(&method(:require))
+['watir', 'watir-performance', 'httpclient'].map(&method(:require))
 
 require 'blkbx/browser'
 require 'blkbx/capabilities'
+require 'blkbx/http'
 require 'blkbx/perform'
 require 'blkbx/version'
 
