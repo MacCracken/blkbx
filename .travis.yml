@@ -15,3 +15,4 @@ before_install:
   - gem install bundler -v 2.0.1
   - docker-compose up &
   - sleep 120 # Allowing docker-compose to get ready
+  - chrome --headless --remote-debugging-port=9222
