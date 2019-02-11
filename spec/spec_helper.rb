@@ -2,7 +2,7 @@ require 'bundler/setup'
 require 'blkbx'
 require 'os'
 require 'webdrivers'
-require 'selenium-webdrivers'
+require 'selenium-webdriver'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
