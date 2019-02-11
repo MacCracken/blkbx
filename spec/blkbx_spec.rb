@@ -6,7 +6,7 @@ end
 
 url  = 'https://www.google.com/'
 args = %w[headless disable-gpu no-sandbox disable-extensions disable-dev-shm-usage]
-test_browsers = %I[firefox chrome]
+test_browsers = %I[chrome firefox]
 test_browsers << :safari if OS.mac? == true
 test_browsers << %I[ie edge] if OS.windows? == true
 opts = Selenium::WebDriver::Chrome::Options.new(args: args)
