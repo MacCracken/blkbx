@@ -20,7 +20,7 @@ test_browsers << %I[ie edge] if OS.windows? == true
 
 test_browsers.each do |example|
   RSpec.describe "BlkbxPerformance-#{example.upcase}" do
-    it '#BROWSER' do
+    it 'browser passes ready state' do
       args = %w[--headless --remote-debugging-port=9222]
       opts = Selenium::WebDriver::Chrome::Options.new(args: args)
       browser = Blkbx::Browser.new example, opt: opts if example == :chrome
@@ -31,7 +31,7 @@ test_browsers.each do |example|
     end
 
     if example != :safari
-      it '#PERFORMANCE' do
+      it 'performance speed greater than or equal to 0' do
         dom_release = Blkbx::Performance.response_time(browser)
         dom_release = dom_release.gsub(/[a-zA-Z: ]/i, '').to_i
         raw = Blkbx::Performance.type(browser, :summary, :response_time)
@@ -42,38 +42,33 @@ test_browsers.each do |example|
       end
     end
 
-    it '#BROWSER-CLOSE' do browser.quit || browser.close; end
+    it 'browser closed' do browser.quit || browser.close; end
   end
 end
 
+# Requires Selenium-Server locally
 test_browsers.each do |example|
   RSpec.describe "BlkbxCapabilities-#{example.upcase}" do
     let(:caps) { Blkbx::Capabilities.new }
-    it '#SET CAPABILITIES' do
-      # Allow Screenshots, Javascript, NativeEvents, CSS Selector
-      caps[browser_name: example, takes_screenshot: 'true',
-           javascript_enabled: 'true', native_events: 'true',
-           css_selectors_enabled: 'true', name: 'Watir']
+    it 'set capabilities is not nil' do
+      caps[:browser_name] = example.to_s
+      caps[:takes_screenshot] = 'true'
+      caps[:javascript_enabled] = 'true'
+      caps[:native_events] = 'true'
+      caps[:css_selectors_enabled] = 'true'
+      caps[:name] = 'Watir'
       caps['browserstack.ie.enablePopups'] = 'true' # IE allows popups
+      expect(caps.browser_name).to eq(example.to_s)
       expect(caps.itself).not_to eq(nil)
     end
 
-    it '#BROWSER' do #  Requires Selenium-Server running locally to pass
+    it 'browser passes ready state' do
       browser = Blkbx::Browser.new example, url: hub, opt: caps
       browser.goto url
       expect(browser.url).to eq url
       expect(browser.ready_state).to eq('complete').or eq('interactive')
     end
 
-    if example != :safari
-      it '#PERFORMANCE' do
-        dom_release = Blkbx::Performance.response_time(browser)
-        raw = Blkbx::Performance.type(browser, :summary, :response_time)
-        expect(raw / 1000).to be >= 0
-        expect(raw / 1000).to eq(dom_release.gsub(/[a-zA-Z: ]/i, '').to_i)
-      end
-    end
-
-    it '#BROWSER-CLOSE' do browser.quit || browser.close; end
+    it 'browser closed' do browser.quit || browser.close; end
   end
 end
