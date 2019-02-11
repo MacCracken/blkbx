@@ -12,6 +12,7 @@ addons:
   chrome: stable
   firefox: latest
 before_install: 
+  - sh bin/chromedriver.sh
   - gem update --system
   - gem install bundler -v 2.0.1
   #- docker-compose up &
