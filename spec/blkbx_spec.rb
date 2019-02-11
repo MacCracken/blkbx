@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 url = 'https://www.google.com/'
 hub = 'http://127.0.0.1:4444/wd/hub/'
 browser = nil
