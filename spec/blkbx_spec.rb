@@ -1,22 +1,21 @@
+url = 'https://www.google.com/'
+hub = 'http://127.0.0.1:4444/wd/hub/'
+browser = nil
+test_browsers = %I[chrome firefox]
+test_browsers << :safari if OS.mac? == true
+test_browsers << %I[ie edge] if OS.windows? == true
+
 RSpec.describe 'VERSION' do
   it 'has a version number' do
     expect(Blkbx::VERSION).not_to be nil
   end
 end
 
-url = 'https://www.google.com/'
-
 RSpec.describe Blkbx::HTTP do
   it 'url status equal to 200' do
     expect(Blkbx::HTTP.get(url).status).to eq(200)
   end
 end
-
-hub = 'http://127.0.0.1:4444/wd/hub/'
-browser = nil
-test_browsers = %I[chrome firefox]
-test_browsers << :safari if OS.mac? == true
-test_browsers << %I[ie edge] if OS.windows? == true
 
 test_browsers.each do |example|
   RSpec.describe "BlkbxPerformance-#{example.upcase}" do
