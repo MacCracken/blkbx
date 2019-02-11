@@ -4,11 +4,12 @@ RSpec.describe 'VERSION' do
   end
 end
 
-url  = 'https://www.google.com/'
+url = 'https://www.google.com/'
+hub = 'http://127.0.0.1:4444/wd/hub/'
+browser = nil
 test_browsers = %I[chrome firefox]
 test_browsers << :safari if OS.mac? == true
 test_browsers << %I[ie edge] if OS.windows? == true
-browser = nil
 
 test_browsers.each do |example|
   RSpec.describe "BlkbxPerformance-#{example.upcase}" do
@@ -34,9 +35,7 @@ test_browsers.each do |example|
       end
     end
 
-    it '#BROWSER-CLOSE' do
-      browser.quit || browser.close
-    end
+    it '#BROWSER-CLOSE' do browser.quit || browser.close; end
   end
 end
 
@@ -48,19 +47,26 @@ test_browsers.each do |example|
       caps[browser_name: example, takes_screenshot: 'true',
            javascript_enabled: 'true', native_events: 'true',
            css_selectors_enabled: 'true', name: 'Watir']
-      # IE allows popups
-      caps['browserstack.ie.enablePopups'] = 'true'
+      caps['browserstack.ie.enablePopups'] = 'true' # IE allows popups
       expect(caps.itself).not_to eq(nil)
     end
 
-    #  Requires Selenium-Server running locally to pass
-    it '#BROWSER' do
-      hub = 'http://127.0.0.1:4444/wd/hub/'
+    it '#BROWSER' do #  Requires Selenium-Server running locally to pass
       browser = Blkbx::Browser.new example, url: hub, opt: caps
       browser.goto url
       expect(browser.url).to eq url
       expect(browser.ready_state).to eq('complete').or eq('interactive')
-      browser.quit || browser.close
     end
+
+    if example != :safari
+      it '#PERFORMANCE' do
+        dom_release = Blkbx::Performance.response_time(browser)
+        raw = Blkbx::Performance.type(browser, :summary, :response_time)
+        expect(raw / 1000).to be >= 0
+        expect(raw / 1000).to eq(dom_release.gsub(/[a-zA-Z: ]/i, '').to_i)
+      end
+    end
+
+    it '#BROWSER-CLOSE' do browser.quit || browser.close; end
   end
 end
