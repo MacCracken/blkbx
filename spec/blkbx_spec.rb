@@ -5,7 +5,7 @@ RSpec.describe 'VERSION' do
 end
 
 url  = 'https://www.google.com/'
-args = %w[no-sandbox disable-gpu disable-dev-shm-usage]
+args = %w[headless no-sandbox disable-gpu disable-dev-shm-usage]
 test_browsers = %I[firefox chrome]
 test_browsers << :safari if OS.mac? == true
 test_browsers << %I[ie edge] if OS.windows? == true
@@ -16,7 +16,7 @@ RSpec.describe Blkbx::Browser, Blkbx::Performance do
   test_browsers.each do |example|
     describe "#{example.upcase} LOCAL".upcase do
       it '#BROWSER' do
-        browser = Blkbx::Browser.new example, options: opts if example == :chrome
+        browser = Blkbx::Browser.new example, opt: opts if example == :chrome
         browser = Blkbx::Browser.new example if example != :chrome
         browser.goto url
         expect(browser.url).to eq url
