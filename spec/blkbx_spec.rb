@@ -14,7 +14,7 @@ test_browsers << %I[ie edge] if OS.windows? == true
 test_browsers.each do |example|
   RSpec.describe "BlkbxPerformance-#{example.upcase}" do
     it '#BROWSER' do
-      args = %w[no-sandbox headless disabe-gpu remote-debugging-port=9222]
+      args = %w[--headless --remote-debugging-port=9222]
       opts = Selenium::WebDriver::Chrome::Options.new(args: args)
       browser = Blkbx::Browser.new example, opt: opts if example == :chrome
       browser = Blkbx::Browser.new example if example != :chrome

@@ -1,4 +1,9 @@
 module Blkbx
+  # Internalizes and Extends Watir::Browser
+  #
+  # Documentation http://www.rubydoc.info/gems/watir
+  class Browser < Watir::Browser; end
+
   # Extending the Browser
   class Browser
     # Traditional Browser Goto with some Error retry catches

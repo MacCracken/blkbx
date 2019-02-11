@@ -1,9 +1,9 @@
 ['watir', 'watir-performance'].map(&method(:require))
 
-require 'blkbx/version'
-require 'blkbx/driver'
+require 'blkbx/browser'
+require 'blkbx/capabilities'
 require 'blkbx/perform'
-require 'blkbx/utils'
+require 'blkbx/version'
 
 module Blkbx
   class Error < StandardError; end
