@@ -15,8 +15,8 @@ browser = nil
 test_browsers.each do |example|
   RSpec.describe "BlkbxPerformance-#{example.upcase}" do
     it '#BROWSER' do
-      browser = Blkbx::Browser.new example, opt: opts if example != :chrome
-      browser = Blkbx::Browser.new example if example == :chrome
+      browser = Blkbx::Browser.new example, opt: opts if example == :chrome
+      browser = Blkbx::Browser.new example if example != :chrome
       browser.goto url
       expect(browser.url).to eq url
       expect(browser.ready_state).to eq('complete').or eq('interactive')
