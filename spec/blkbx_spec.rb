@@ -53,12 +53,12 @@ test_browsers.each do |example|
     let(:caps) { Blkbx::Capabilities.new }
     it 'set capabilities is not nil' do
       caps[:browser_name] = example.to_s
-      caps[:takes_screenshot] = 'true'
-      caps[:javascript_enabled] = 'true'
-      caps[:native_events] = 'true'
-      caps[:css_selectors_enabled] = 'true'
-      caps[:name] = 'Watir'
-      caps['browserstack.ie.enablePopups'] = 'true' # IE allows popups
+      caps[:takes_screenshot] = 'true'                # Allow Screenshots
+      caps[:javascript_enabled] = 'true'              # Allow Javascript
+      caps[:native_events] = 'true'                   # Allow NativeEvents
+      caps[:css_selectors_enabled] = 'true'           # Allow CSS Selector
+      caps[:name] = 'Watir'                           # Naming Driver
+      caps['browserstack.ie.enablePopups'] = 'true'   # IE allows popups; JS
       expect(caps.browser_name).to eq(example.to_s)
       expect(caps.itself).not_to eq(nil)
     end
