@@ -6,6 +6,8 @@ browser = nil
 test_browsers = %I[chrome firefox]
 test_browsers << :safari if OS.mac? == true
 test_browsers << %I[ie edge] if OS.windows? == true
+args = %w[--headless --remote-debugging-port=9222]
+opts = Selenium::WebDriver::Chrome::Options.new(args: args)
 
 RSpec.describe 'VERSION' do
   it 'has a version number' do
@@ -22,13 +24,12 @@ end
 test_browsers.each do |example|
   RSpec.describe "BlkbxPerformance-#{example.upcase}" do
     it 'browser passes ready state' do
-      args = %w[--headless --remote-debugging-port=9222]
-      opts = Selenium::WebDriver::Chrome::Options.new(args: args)
       browser = Blkbx::Browser.new example, opt: opts if example == :chrome
       browser = Blkbx::Browser.new example if example != :chrome
       browser.goto url
       expect(browser.url).to eq url
       expect(browser.ready_state).to eq('complete').or eq('interactive')
+      expect(browser.cookies.class).to eq Watir::Cookies
     end
 
     if example != :safari
@@ -68,6 +69,7 @@ test_browsers.each do |example|
       browser.goto url
       expect(browser.url).to eq url
       expect(browser.ready_state).to eq('complete').or eq('interactive')
+      expect(browser.cookies.class).to eq Watir::Cookies
     end
 
     it 'browser closed' do browser.quit || browser.close; end

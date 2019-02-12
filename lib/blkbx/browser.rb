@@ -3,7 +3,7 @@
 module Blkbx
   # Internalizes and Extends Watir::Browser
   #
-  # Documentation http://www.rubydoc.info/gems/watir
+  # Documentation http://www.rubydoc.info/gems/watir/Watir/Browser
   class Browser < Watir::Browser; end
 
   # Extending the Browser
@@ -20,6 +20,23 @@ module Blkbx
         puts "#{err.class} detected, retrying operation"
         back
         (tries -= 1).zero? ? raise : retry
+      end
+    end
+
+    # Logs Class pulls Browser Logs
+    # Only Applicable to Chrome Browser
+    class Logs
+      def self.get(browser)
+        browser.driver.manage.logs.get(:browser)
+      end
+
+      def self.get_type(browser, type)
+        error_type = type.to_s.upcase
+        errors = []
+        getLogs(browser).each do |log|
+          errors << log.to_s if log.level == error_type
+        end
+        errors
       end
     end
   end
