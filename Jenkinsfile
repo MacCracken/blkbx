@@ -17,7 +17,7 @@ pipeline {
 
     stage('Static Code Analysis') {
       steps {
-        sh 'rake rubocop --format json --out rubocop-report.json'
+        sh 'rubocop --format json --out rubocop-report.json'
         withSonarQubeEnv('v3.3.0') {
            sh 'mvn clean package sonar:sonar' +
              '-Dsonar.projectKey=blkbx:all:master ' +
