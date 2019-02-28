@@ -17,6 +17,16 @@ pipeline {
     stage('Static Code Analysis') {
       steps {
         sh 'rake rubocop'
+        withSonarQubeEnv('My SonarQube Server') {
+          sh 'mvn clean package sonar:sonar'
+        }
+      }
+    }
+    stage("Quality Gate") {
+      steps {
+        timeout(time: 1, unit: 'HOURS') {
+          waitForQualityGate abortPipeline: true
+        }
       }
     }
     stage('Spec Tests') {
