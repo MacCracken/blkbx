@@ -1,21 +1,25 @@
-version: "3"
+version: "3.7"
 services:
-  selenium-hub:
-    image: selenium/hub:3.141.59-fluorine
-    container_name: selenium-hub
+  app:
+    build: .
+    tty: true
+    depends_on:
+      - hub
+    volumes:
+      - .:/blkbx
+  hub:
+    image: selenium/hub:3.141.59-vanadium
     ports:
       - "4444:4444"
   chrome:
-    image: selenium/node-chrome:3.141.59-fluorine
+    image: selenium/node-chrome:3.141.59-vanadium
     depends_on:
-      - selenium-hub
+      - hub
     environment:
-      - HUB_HOST=selenium-hub
-      - HUB_PORT=4444
+      - HUB_HOST=hub
   firefox:
-    image: selenium/node-firefox:3.141.59-fluorine
+    image: selenium/node-firefox:3.141.59-vanadium
     depends_on:
-      - selenium-hub
+      - hub
     environment:
-      - HUB_HOST=selenium-hub
-      - HUB_PORT=4444
+      - HUB_HOST=hub

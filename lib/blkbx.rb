@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-['watir', 'watir-performance', 'httpclient'].map(&method(:require))
+%w[watir watir-performance httpclient].map(&method(:require))
 
 require 'blkbx/browser'
 require 'blkbx/capabilities'
