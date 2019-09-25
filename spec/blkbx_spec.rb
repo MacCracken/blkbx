@@ -6,7 +6,7 @@ browser = nil
 test_browsers = %I[chrome firefox]
 test_browsers << :safari if OS.mac? == true
 test_browsers << %I[ie edge] if OS.windows? == true
-args = %w[--headless --remote-debugging-port=9222]
+args = %w[--headless --no-sandbox --remote-debugging-port=9222]
 opts = Selenium::WebDriver::Chrome::Options.new(args: args)
 
 RSpec.describe 'VERSION' do

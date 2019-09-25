@@ -7,10 +7,14 @@ set -vx
 gem update --system
 
 # Install Bundle 
-gem install bundle
+gem install bundler
 
 # Bundle Installs Required Gems
 bundle install
 
 # Cleaning up Gem Updates
 gem cleanup
+
+# Gem Build & Install
+gem build blkbx.gemspec
+gem install blkbx

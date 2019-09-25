@@ -16,8 +16,8 @@ module Blkbx
       tries ||= 3
       begin
         goto(page)
-      rescue Net::ReadTimeout, Net::HTTPRequestTimeOut, Errno::ETIMEDOUT => err
-        puts "#{err.class} detected, retrying operation"
+      rescue Net::ReadTimeout, Net::HTTPRequestTimeOut, Errno::ETIMEDOUT => e
+        puts "#{e.class} detected, retrying operation"
         back
         (tries -= 1).zero? ? raise : retry
       end
