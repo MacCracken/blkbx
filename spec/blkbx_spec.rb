@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 url = 'https://www.google.com/'
-hub = 'http://127.0.0.1:4444/wd/hub/'
+hub = 'http://selenium.hub:4444/wd/hub/'
 browser = nil
 test_browsers = %I[chrome firefox]
 test_browsers << :safari if OS.mac? == true
@@ -24,8 +24,8 @@ end
 test_browsers.each do |example|
   RSpec.describe "BlkbxPerformance-#{example.upcase}" do
     it 'browser passes ready state' do
-      browser = Blkbx::Browser.new example, opt: opts if example == :chrome
-      browser = Blkbx::Browser.new example if example != :chrome
+      browser = Blkbx::Browser.new example, url: hub, opt: opts if example == :chrome
+      browser = Blkbx::Browser.new example, url: hub if example != :chrome
       browser.goto url
       expect(browser.url).to eq url
       expect(browser.ready_state).to eq('complete').or eq('interactive')

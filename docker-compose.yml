@@ -1,25 +1,26 @@
 version: "3.7"
 services:
-  app:
+  automation:
     build: .
     tty: true
     depends_on:
-      - hub
+      - selenium.hub
     volumes:
       - .:/blkbx
-  hub:
+    image: blkbx/automation:0.2.0
+  selenium.hub:
     image: selenium/hub:3.141.59-vanadium
     ports:
       - "4444:4444"
   chrome:
     image: selenium/node-chrome:3.141.59-vanadium
     depends_on:
-      - hub
+      - selenium.hub
     environment:
-      - HUB_HOST=hub
+      - HUB_HOST=selenium.hub
   firefox:
     image: selenium/node-firefox:3.141.59-vanadium
     depends_on:
-      - hub
+      - selenium.hub
     environment:
-      - HUB_HOST=hub
+      - HUB_HOST=selenium.hub
